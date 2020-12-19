@@ -158,3 +158,11 @@ This is the only account where the chi-square test detected no anamoly in any of
 The followers of this account also have the least suspiscious distribution of account creation date, majority of them were created before 2016, while we were seeing majority of followers of Trump, Biden, Harris are created in the 9 days of December 2020.
 
 ![](image/creation_date/UnfollowTrump_followers_creation_date.png)
+
+Here are the bar graphs for the 6 accounts for comparison
+
+![](image/creation_date/realDonaldTrump_JoeBiden_followers_creation_date.png)
+
+![](image/creation_date/VP_SenKamalaHarris_followers_creation_date.png)
+
+![](image/creation_date/senatemajldr_SpeakerPelosi_followers_creation_date.png)
