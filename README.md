@@ -24,7 +24,7 @@ This method can be used to test if a set of numbers may be artificial (or manipu
 <br/>
 
 ## Motivation
-In the recent years, Twitter has become one of the major forums of American political discource, we started to hear more about bot farms, propaganda bots, and bots driving online discussions of current events. Here are few headlines to get a flavor of bots on Twitter:
+In the recent years, Twitter has become one of the major forums of American political discourse, we started to hear more about bot farms, propaganda bots, and bots driving online discussions of current events. Here are few headlines to get a flavor of bots on Twitter:
 
 [Russia's manipulation of Twitter was far vaster than believed - politico.com](https://www.politico.com/story/2019/06/05/study-russia-cybersecurity-twitter-1353543)
 
@@ -34,13 +34,13 @@ In the recent years, Twitter has become one of the major forums of American poli
 
 A Twitter user's numeric statistics such as follower count, friend count, favorites count, and statuses count should span several orders of magnitude, these counts can vary from zero to millions, therefore Benford's Law should be applicable. 
 
-I wanted to see if applying Benford's Law to Twitter users' followers' numeric data will reveal anything interesting, if this method can tell us about possibilities of bots. 
+I wanted to see if applying Benford's Law to Twitter users' followers' numeric data can reveal unusual user activity , and if it has a possibility of bots detection. 
 
 ## Data Source 
 
 I used [Tweepy](https://www.tweepy.org/) to access the Twitter API, and downloaded the 10,000 most recent followers for each of the 6 Twitter profiles I chose. 
 
-I chose the 6 most important political leaders in the U.S., they are:
+I chose the 6 important political leaders in the U.S., they are:
 
 1. President Donald Trump @realDonaldTrump 
 
@@ -62,7 +62,7 @@ From the 60,000 twitter user objects, I extracted the count of their followers, 
 
 Null Hypothesis: The 4 numeric statistics of the 10,000 followers of each user follow the Benford's Distribution
 
-Alternate Hypothesis: The 4 numeric statistics of the 10,00 followers of each user don't follow Benford's Distribution
+Alternate Hypothesis: The 4 numeric statistics of the 10,000 followers of each user don't follow Benford's Distribution
 
 I used a Chi-Square test, and an alpha = 0.05
 
@@ -75,13 +75,24 @@ I ran the chi-square test and graphed them with and without count = 1, and somet
 
 As you can see below, if we exclude the data points that are equal to 1, the graphs look a lot different than if we include them. Meaning there are a lot of followers with only count of 1 in their statistics (1 follower, 1 favorited tweet, etc.)
 
+<br/>
+
+### Donald Trump's followers
 Trump's followers, including count = 1
 ![](image/realDonaldTrump_include_1.png)
+
+For reference, below graph excluded the count of 1's. We see a drop in leading digits of 1 compared to above graph, which tells us that there are a lot of followers that have count of 1 in their follower, favorites, and statuses counts. 
 
 Trump's followers, not including count = 1
 ![](image/realDonaldTrump_ignore_1.png)
 
+Below is the creation date of the 10,000 recent followers of @realDonaldTrump, majority of them were created in the 9 days of December 2020, which is a bit suspiscious to me. 
+
 ![](image/creation_date/realDonaldTrump_followers_creation_date.png)
+
+<br/>
+
+### Joe Biden's followers
 
 Biden's followers, including count = 1
 
@@ -91,53 +102,72 @@ Biden's followers, not including count = 1
 
 ![](image/JoeBiden_ignore_1.png)
 
+We are seeing a similar trend as Donald Trump's Followers, where a lot of the followers have only count of 1 for their follower, favorites, and statuses counts. 
+
+Majority of Joe Biden's recent followers are also created in the 9 days of December 2020. 
 
 ![](image/creation_date/JoeBiden_followers_creation_date.png)
 
+<br/>
+
+### Mike Pence's followers
 
 Pence's followers, including count = 1
-
 ![](image/VP_include_1.png)
 
 Pence's followers, not including count = 1
-
 ![](image/VP_ignore_1.png)
 
+Similar to Trump and Biden, Pence's followers also have too many leading digits of 1 when we include count of 1, and not enough 1 when we exclude count of 1.
+
+The Majority of Pence's recent followers were created in 2020 before December. 
 
 ![](image/creation_date/VP_followers_creation_date.png)
 
+<br/>
+
+### Kamala Harris's followers
 
 Harris's followers, including count = 1
-
 ![](image/SenKamalaHarris_include_1.png)
 
 Harris's followers, not including count = 1
-
 ![](image/SenKamalaHarris_ignore_1.png)
 
+Very similar to the 3 accounts we saw before, too many counts of 1. 
+
+Majority of Harris's followers were created in the 9 days of December 2020, similar to Donald Trump's and Joe Biden's followers. 
 ![](image/creation_date/SenKamalaHarris_followers_creation_date.png)
 
+<br/>
 
+### Mitch Mcconell's followers
 Mcconell's followers, including count = 1
 
 ![](image/senatemajldr_include_1.png)
 
 Mcconell's followers, not including count = 1
 
-![](image/senatemajldr_ignore_1.png)
 
+![](image/senatemajldr_ignore_1.png)
+Similar situation with count of 1 as previous users, but not as significant.
+
+The creation date of recent followers are mostly in 2020 before December, and also before 2016. 
 ![](image/creation_date/senatemajldr_followers_creation_date.png)
 
+<br/>
+
+### Nancy Pelosi's followers
 
 Pelosi's followers, including count = 1
-
 ![](image/SpeakerPelosi_include_1.png)
 
 Pelosi's followers, not including count = 1
-
 ![](image/SpeakerPelosi_ignore_1.png)
 
+These 4 statistics have a similar results as Mitch Mcconell's followers, where there is too many count of 1's, but not as significant as Trump, Biden, and Harris. 
 
+The majority of Pelosi's followers are created in 2020 before December, followed by creation dates before 2016, and creation dates in the 9 days of December 2020. 
 ![](image/creation_date/SpeakerPelosi_followers_creation_date.png)
 
 
@@ -166,3 +196,17 @@ Here are the bar graphs for the 6 accounts for comparison
 ![](image/creation_date/VP_SenKamalaHarris_followers_creation_date.png)
 
 ![](image/creation_date/senatemajldr_SpeakerPelosi_followers_creation_date.png)
+
+# Conclusions
+
+We discovered that when Benford's Law detects anomalies in the followers data, the creation dates of the followers tend to be more recent. 
+
+A recently created user may or may not be a bot, we don't have enough evidence to conclude one way or another, but they do raise suspicions when tested against Benford's Law.
+
+In the previous graphs of the 4 statistics for each user that we saw, we discovered that friend counts have the closest fit to Benford's Law in every run, and it's the most unaffected when removing the counts of 1. 
+
+So at the current stage, I think Benford's Law can tell us about anomalies in data, but not exacly why the anomalies occurred, so it's not entirely useful in bot detection in my experiment, there may be other ways to use Benford's Law that can be more effective in bot detection. 
+
+
+
+
