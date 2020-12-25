@@ -1,3 +1,5 @@
 keys.py
 *.csv
 *.pkl
+.ipynb_checkpoints
+__pycache__
